@@ -1,0 +1,11 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+.wrapper {
+    margin: 20px 0 0 1em;
+}

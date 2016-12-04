@@ -1,0 +1,22 @@
+	 .die {
+	    display: inline-block;
+	 }
+
+	 .die.visible-false {
+	    visibility: hidden;
+	 }
+
+	 .die svg {
+	    width:100px;
+	 }
+	    
+	 .odd, .pair1, .pair2, .pair3 {
+	    display: none;
+	 }
+
+	 .eyes-1 .odd  {display: inline;}
+	 .eyes-2 .pair1 {display: inline;}
+	 .eyes-3 .odd, .eyes-3 .pair1 {display: inline;}
+	 .eyes-4 .pair1, .eyes-4 .pair2  {display: inline;}
+	 .eyes-5 .odd, .eyes-5 .pair1, .eyes-5 .pair2  {display: inline;}
+	 .eyes-6 .pair1, .eyes-6 .pair2, .eyes-6 .pair3   {display: inline;}
