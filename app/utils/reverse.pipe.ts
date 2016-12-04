@@ -4,7 +4,7 @@ import {Pipe, PipeTransform} from "@angular/core";
     name: 'reverse'
 })
 export class ReversePipe implements PipeTransform {
-    transform(arr, hasToReverse:boolean=true) {
+    transform(arr:any, hasToReverse:boolean=true) {
         let copy = arr.slice();
         if (hasToReverse){
             return copy.reverse();

@@ -15,7 +15,7 @@ var CheckboxMarkerComponent = (function () {
     function CheckboxMarkerComponent() {
         this.isClickPossibleRound1 = false;
         this.isClickPossible = false;
-        this.choise = new core_1.EventEmitter();
+        this.clickCheckMarker = new core_1.EventEmitter();
     }
     CheckboxMarkerComponent.prototype.clickBox = function () {
         if (this.isDisabled) {
@@ -26,7 +26,7 @@ var CheckboxMarkerComponent = (function () {
         }
         this.isMarked = true;
         this.isDisabled = true;
-        this.choise.emit(this.indexOfBox);
+        this.clickCheckMarker.emit(this.indexOfBox);
     };
     __decorate([
         core_1.Input(), 
@@ -56,7 +56,7 @@ var CheckboxMarkerComponent = (function () {
     __decorate([
         core_1.Output(), 
         __metadata('design:type', core_1.EventEmitter)
-    ], CheckboxMarkerComponent.prototype, "choise", void 0);
+    ], CheckboxMarkerComponent.prototype, "clickCheckMarker", void 0);
     CheckboxMarkerComponent = __decorate([
         core_1.Component({
             selector: 'checkbox-marker',

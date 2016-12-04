@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var shared_service_1 = require("../shared.service");
 var mock_colors_qwixx_1 = require("../mock-colors-qwixx");
 var checkboxMarker_component_1 = require("../checkboxMarker/checkboxMarker.component");
+var possibleClicks_1 = require("../possibleClicks");
 var CheckboxmarkerRowComponent = (function () {
     function CheckboxmarkerRowComponent(sh) {
         this.sh = sh;
@@ -29,7 +30,7 @@ var CheckboxmarkerRowComponent = (function () {
         // das letzte Element ist disabled:
         this.checkBoxMarkerCompList.last.isDisabled = true;
     };
-    CheckboxmarkerRowComponent.prototype.toggleBox = function (id) {
+    CheckboxmarkerRowComponent.prototype.clickOnBox = function (id) {
         var _this = this;
         this.disableBoxesOnTheLeft(id);
         this.sumOfMarker++;
@@ -95,11 +96,7 @@ var CheckboxmarkerRowComponent = (function () {
     ], CheckboxmarkerRowComponent.prototype, "numbersOfBoxes", void 0);
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', Boolean)
-    ], CheckboxmarkerRowComponent.prototype, "reverseBoxes", void 0);
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
+        __metadata('design:type', possibleClicks_1.PossibleClicks)
     ], CheckboxmarkerRowComponent.prototype, "allowedBoxesToClick", void 0);
     __decorate([
         core_1.Input(), 
@@ -116,7 +113,7 @@ var CheckboxmarkerRowComponent = (function () {
     CheckboxmarkerRowComponent = __decorate([
         core_1.Component({
             selector: 'checkboxMarkerRow',
-            template: "\n<div style=\"clear: both; display: table\">\n<checkbox-marker\n    *ngFor=\"let box of rowNumbers; let i = index\" \n    [colorOfBox]=\"getColor(colorOfBoxes[i])\"\n    [colorNrOfBox]=\"colorOfBoxes[i]\"\n    [indexOfBox]=\"i\"\n    [boxNr]=\"numbersOfBoxes[i]\"\n    [isLastInRow]=\"i==rowNumbers.length-1\"\n    (choise)=\"toggleBox($event)\" ></checkbox-marker>\n    <span class=\"points\">{{sumOfMarker | qwixxPoints}}</span>\n    <span>{{sharedServiceTest}}</span>\n</div>\n",
+            template: "\n<div style=\"clear: both; display: table\">\n<checkbox-marker\n    *ngFor=\"let box of rowNumbers; let i = index\" \n    [colorOfBox]=\"getColor(colorOfBoxes[i])\"\n    [colorNrOfBox]=\"colorOfBoxes[i]\"\n    [indexOfBox]=\"i\"\n    [boxNr]=\"numbersOfBoxes[i]\"\n    [isLastInRow]=\"i==rowNumbers.length-1\"\n    (clickCheckMarker)=\"clickOnBox($event)\" ></checkbox-marker>\n    <span class=\"points\">{{sumOfMarker | qwixxPoints}}</span>\n    <span>{{sharedServiceTest}}</span>\n</div>\n",
             styles: ["\n.points {\n    display: inline-block;\n    padding: 6px 10px 0 5px;\n}\n"]
         }), 
         __metadata('design:paramtypes', [shared_service_1.SharedService])

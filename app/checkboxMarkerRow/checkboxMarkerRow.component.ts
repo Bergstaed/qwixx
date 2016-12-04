@@ -5,6 +5,7 @@ import {
 import {SharedService} from "../shared.service";
 import {COLORS_QWIXX} from "../mock-colors-qwixx";
 import {CheckboxMarkerComponent} from "../checkboxMarker/checkboxMarker.component";
+import {PossibleClicks} from "../possibleClicks";
 
 @Component ({
     selector: 'checkboxMarkerRow',
@@ -17,7 +18,7 @@ import {CheckboxMarkerComponent} from "../checkboxMarker/checkboxMarker.componen
     [indexOfBox]="i"
     [boxNr]="numbersOfBoxes[i]"
     [isLastInRow]="i==rowNumbers.length-1"
-    (choise)="toggleBox($event)" ></checkbox-marker>
+    (clickCheckMarker)="clickOnBox($event)" ></checkbox-marker>
     <span class="points">{{sumOfMarker | qwixxPoints}}</span>
     <span>{{sharedServiceTest}}</span>
 </div>
@@ -34,15 +35,14 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     @Input() colorOfBoxes:Array<number>;
     @Input() numbersOfBoxes:Array<number>;
 
-    @Input() reverseBoxes:boolean;
-    @Input() allowedBoxesToClick;
+    @Input() allowedBoxesToClick:PossibleClicks;
     @Input() round: number;
 
     @Output() tellSumOfMarker:EventEmitter<number> = new EventEmitter();
 
     @ViewChildren(CheckboxMarkerComponent) checkBoxMarkerCompList : QueryList<CheckboxMarkerComponent>;
 
-    rowNumbers = [];
+    rowNumbers: Array<number> = [];
     sumOfMarker:number = 0;
     sharedServiceTest:string;
 
@@ -62,7 +62,7 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
         this.checkBoxMarkerCompList.last.isDisabled = true;
     }
 
-    toggleBox(id:number) {
+    clickOnBox(id:number): void {
         this.disableBoxesOnTheLeft(id);
         this.sumOfMarker++;
         this.tellSumOfMarker.emit(this.sumOfMarker);
@@ -75,7 +75,7 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
         });
     }
 
-    checkLastField(){
+    checkLastField() : void {
         if (this.sumOfMarker >= 5 && !this.checkBoxMarkerCompList.last.isMarked) {
             this.checkBoxMarkerCompList.last.isDisabled = false;
         }
@@ -101,7 +101,7 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
         return COLORS_QWIXX.diceBackground[colorNr];
     }
 
-    setAllowedNumbersToClick(possValues) {
+    setAllowedNumbersToClick(possValues) : void {
         if (!this.checkBoxMarkerCompList) return;
 
         this.checkBoxMarkerCompList.forEach(component => {
@@ -125,7 +125,7 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
         });
     }
 
-    getAValue(i):boolean{
+    getAValue(i): boolean{
         return false;
     }
 }

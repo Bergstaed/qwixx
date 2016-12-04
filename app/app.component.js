@@ -18,7 +18,7 @@ var AppComponent = (function () {
         // dieRow sendet erlaubte Felder über EventEmitter hier in die app.component
         // Diese Daten von hier an CheckboxmarkerRow an Input senden
         this.title = 'qwixx';
-        this.playerName = 'Du';
+        this.playerName = 'Michael';
         this.sumMarker = [0, 0, 0, 0];
         this.roundNr = 0;
     }
@@ -53,7 +53,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
-            template: "<div class=\"wrapper\">\n    <h1>{{title | upper}}</h1>\n    <h2>Am Zug <span *ngIf=\"playerName=='Du'\">b</span>ist {{playerName}}</h2>\n  \n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,0)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(0)\" [numbersOfBoxes]=\"getNumbers(0)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,1)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(1)\" [numbersOfBoxes]=\"getNumbers(1)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,2)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(2)\" [numbersOfBoxes]=\"getNumbers(2)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,3)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(3)\" [numbersOfBoxes]=\"getNumbers(3)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <failCounter></failCounter>\n    <br><br>\n    <dieRow (transfer)=\"transferPossibleDieValues($event)\"></dieRow>\n    <br>\n      <button (click)=\"nextPlayer()\">Fertig</button>\n      <br>\n    <button disabled>Neues Spiel</button><br><br>\n    <a href=\"http://www.brettspiele-magazin.de/qwixx-gemixxt/\" target=\"_blank\">Varianten Qwixx</a>\n    </div>\n"
+            template: "<div class=\"wrapper\">\n    <h1>{{title | upper}}</h1>\n    <h2>Am Zug: {{playerName}}</h2>\n  \n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,0)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(0)\" [numbersOfBoxes]=\"getNumbers(0)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,1)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(1)\" [numbersOfBoxes]=\"getNumbers(1)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,2)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(2)\" [numbersOfBoxes]=\"getNumbers(2)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <checkboxMarkerRow (tellSumOfMarker)=\"checkSum($event,3)\" [allowedBoxesToClick]=\"allowedBx\" [colorOfBoxes]=\"getColors(3)\" [numbersOfBoxes]=\"getNumbers(3)\" [round]=\"roundNr\"></checkboxMarkerRow>\n    <failCounter></failCounter>\n    <br><br>\n    <dieRow (transfer)=\"transferPossibleDieValues($event)\"></dieRow>\n    <br>\n      <button (click)=\"nextPlayer()\">Fertig</button>\n      <br>\n    <button disabled>Neues Spiel</button><br><br>\n    <a href=\"http://www.brettspiele-magazin.de/qwixx-gemixxt/\" target=\"_blank\">Varianten Qwixx</a>\n    </div>\n"
         }), 
         __metadata('design:paramtypes', [shared_service_1.SharedService, core_1.ChangeDetectorRef])
     ], AppComponent);

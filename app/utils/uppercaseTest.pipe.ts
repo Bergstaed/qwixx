@@ -4,7 +4,7 @@ import {Pipe, PipeTransform} from "@angular/core";
     name: 'upper'
 })
 export class UppercaseTestPipe implements PipeTransform {
-    transform(str, testFunctionNr:number = 2) {
+    transform(str:string, testFunctionNr:number = 2) {
         let res1:string = str.replace(/qwixx|otto|test/gi,
             function(x){
                 return x.toUpperCase();

@@ -5,6 +5,7 @@ import {
 import {COLORS_QWIXX} from "../mock-colors-qwixx";
 import {DieComponent} from "../die/die.component";
 import {SharedService} from "../shared.service";
+import {PossibleClicks} from "../possibleClicks";
 
 @Component({
     selector:'dieRow',
@@ -24,7 +25,7 @@ import {SharedService} from "../shared.service";
 })
 export class DieRowComponent implements AfterViewInit {
     possibleValues: string;
-    possibleValues_ArNum = {all:[], col0:[], col1:[], col2:[], col3:[]};
+    possibleValues_ArNum: PossibleClicks = {all:[], col0:[], col1:[], col2:[], col3:[]};
     @Output() transfer:EventEmitter<any> = new EventEmitter();
 
     constructor(private sh:SharedService, private cdRef:ChangeDetectorRef){}

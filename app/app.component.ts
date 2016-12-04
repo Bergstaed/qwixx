@@ -1,12 +1,13 @@
 import {Component, OnInit, ChangeDetectorRef, AfterViewInit} from "@angular/core";
 import {SharedService} from "./shared.service";
+import {PossibleClicks} from "./possibleClicks";
 
 
 @Component({
     selector: 'app',
     template: `<div class="wrapper">
     <h1>{{title | upper}}</h1>
-    <h2>Am Zug <span *ngIf="playerName=='Du'">b</span>ist {{playerName}}</h2>
+    <h2>Am Zug: {{playerName}}</h2>
   
     <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,0)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(0)" [numbersOfBoxes]="getNumbers(0)" [round]="roundNr"></checkboxMarkerRow>
     <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,1)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(1)" [numbersOfBoxes]="getNumbers(1)" [round]="roundNr"></checkboxMarkerRow>
@@ -24,13 +25,13 @@ import {SharedService} from "./shared.service";
 `
 })
 export class AppComponent implements OnInit, AfterViewInit {
-    allowedBx = {all:[], col0:[], col1:[], col2:[], col3:[]};
+    allowedBx:PossibleClicks = {all:[], col0:[], col1:[], col2:[], col3:[]};
 
     // dieRow sendet erlaubte Felder über EventEmitter hier in die app.component
     // Diese Daten von hier an CheckboxmarkerRow an Input senden
 
     title:string = 'qwixx';
-    playerName:string = 'Du';
+    playerName:string = 'Michael';
     sumMarker:Array<number> = [0, 0, 0, 0];
     roundNr:number = 0;
     rowColors;

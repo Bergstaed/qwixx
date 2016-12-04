@@ -51,7 +51,7 @@ export class CheckboxMarkerComponent {
     isClickPossible:boolean = false;
     isMarked:boolean;
 
-    @Output() choise:EventEmitter<number> = new EventEmitter();
+    @Output() clickCheckMarker:EventEmitter<number> = new EventEmitter();
 
     clickBox() {
         if (this.isDisabled) {
@@ -62,7 +62,7 @@ export class CheckboxMarkerComponent {
         }
         this.isMarked = true;
         this.isDisabled = true;
-        this.choise.emit(this.indexOfBox);
+        this.clickCheckMarker.emit(this.indexOfBox);
     }
 
 }
