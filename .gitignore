@@ -1,3 +1,14 @@
 .idea
 node_modules
 typings
+
+npm-debug.log
+
+*.js
+*.js.map
+
+
+
+#### example for ignored filetype, not in spec folder
+# *.json
+# !spec/*.json
