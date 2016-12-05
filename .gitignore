@@ -8,7 +8,7 @@ npm-debug.log
 *.js.map
 
 
-
 #### example for ignored filetype, not in spec folder
 # *.json
 # !spec/*.json
+
