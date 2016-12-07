@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Player} from "./player";
 
 @Injectable()
 export class SharedService {
@@ -17,6 +18,20 @@ export class SharedService {
         [12,11,10,9,8,7,6,5,4,3,2],
         [12,11,10,9,8,7,6,5,4,3,2]
     ];
+
+    playerThisRound: Array<Player> = [
+        {name:'Michael'},
+        {name:'Spieler 2'},
+        {name:'Spieler 3'}
+    ];
+    activePlayerNr: number = 0;
+    nextActivePlayer () : number{
+        this.activePlayerNr++;
+        if (this.activePlayerNr >= this.playerThisRound.length) {
+            this.activePlayerNr = 0;
+        }
+        return this.activePlayerNr;
+    }
 
     insertData(data: string){
         this.dataArray.unshift(data);

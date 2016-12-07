@@ -11,13 +11,15 @@ import {DieRowComponent} from "./dieRow/dieRow.component";
 import {SharedService} from "./shared.service";
 import {QwixxPointsPipe} from "./utils/qwixxPoints.pipe";
 import {FailCounterComponent} from "./failCounter/failCounter.component";
+import {PlayerComponent} from "./player/player.component";
+import {RoundComponent} from "./round/round.component";
 
 
 @NgModule ( {
     imports: [BrowserModule],
     declarations: [AppComponent,
         CheckboxmarkerRowComponent, CheckboxMarkerComponent,
-        DieComponent, DieRowComponent,
+        DieComponent, DieRowComponent, PlayerComponent, RoundComponent,
         FailCounterComponent,
         ReversePipe, UppercaseTestPipe, QwixxPointsPipe],
     providers: [SharedService],

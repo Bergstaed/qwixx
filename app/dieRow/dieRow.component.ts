@@ -17,14 +17,11 @@ import {PossibleClicks} from "../possibleClicks";
     <my-die [backColOfDie]="getBackCol(2)" [colorOfDie]="getColor(2)" ></my-die>
     <my-die [backColOfDie]="getBackCol(3)" [colorOfDie]="getColor(3)" ></my-die>
     <button (click)="rollAllDices()">Würfeln</button> <br>
-    <div>{{possibleValues}} <button (click)="testShared()">Überschreibe Name</button></div>
-    
 `,
     styles: [`
 .dist {padding: 0 3px}`]
 })
 export class DieRowComponent implements AfterViewInit {
-    possibleValues: string;
     possibleValues_ArNum: PossibleClicks = {all:[], col0:[], col1:[], col2:[], col3:[]};
     @Output() transfer:EventEmitter<any> = new EventEmitter();
 
@@ -43,10 +40,6 @@ export class DieRowComponent implements AfterViewInit {
     }
     getColor(colorNr:number):string {
         return COLORS_QWIXX.diceColor[colorNr];
-    }
-    testShared(){
-        this.sh.name = 'Name in Service-Name überschrieben';
-        this.sh.rowcolor = [0,2,3,0,0,0,0,0,0,0,0];
     }
 
     rollAllDices () {
@@ -68,7 +61,6 @@ export class DieRowComponent implements AfterViewInit {
             (dieVal[1] + dieVal[4]),
             (dieVal[1] + dieVal[5]) ];
 
-
         this.possibleValues_ArNum.all  = [ (dieVal[0] + dieVal[1]) ];
 
         this.possibleValues_ArNum.col0 = [ (dieVal[0] + dieVal[2]) ];
@@ -83,15 +75,6 @@ export class DieRowComponent implements AfterViewInit {
         this.possibleValues_ArNum.col3 = [ (dieVal[0] + dieVal[5]) ];
         this.possibleValues_ArNum.col3.push(dieVal[1] + dieVal[5]);
 
-            //ar.sort((a, b) => a - b);
-        //this.possibleValues_ArNum = {all:[7], col0:[], col1:[], col2:[], col3:[]};
-
-        this.possibleValues = "";
-        this.possibleValues += "All: " + this.possibleValues_ArNum.all.toString();
-        this.possibleValues += " red: " + this.possibleValues_ArNum.col0.toString();
-        this.possibleValues += " yellow: " + this.possibleValues_ArNum.col1.toString();
-        this.possibleValues += " green: " + this.possibleValues_ArNum.col2.toString();
-        this.possibleValues += " blue: " + this.possibleValues_ArNum.col3.toString();
         this.transfer.emit(this.possibleValues_ArNum);
 
     }

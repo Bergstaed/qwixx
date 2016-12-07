@@ -16,11 +16,11 @@ import {PossibleClicks} from "../possibleClicks";
     [colorOfBox]="getColor(colorOfBoxes[i])"
     [colorNrOfBox]="colorOfBoxes[i]"
     [indexOfBox]="i"
+    [isActivePlayer]="isActivePlayer"
     [boxNr]="numbersOfBoxes[i]"
     [isLastInRow]="i==rowNumbers.length-1"
     (clickCheckMarker)="clickOnBox($event)" ></checkbox-marker>
-    <span class="points">{{sumOfMarker | qwixxPoints}}</span>
-    <span>{{sharedServiceTest}}</span>
+    <span class="points noselect">{{sumOfMarker | qwixxPoints}}</span>
 </div>
 `,
     styles:[`
@@ -36,6 +36,7 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     @Input() numbersOfBoxes:Array<number>;
 
     @Input() allowedBoxesToClick:PossibleClicks;
+    @Input() isActivePlayer:boolean;
     @Input() round: number;
 
     @Output() tellSumOfMarker:EventEmitter<number> = new EventEmitter();
@@ -44,7 +45,6 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
 
     rowNumbers: Array<number> = [];
     sumOfMarker:number = 0;
-    sharedServiceTest:string;
 
     constructor(private sh:SharedService) {
     }
@@ -67,8 +67,6 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
         this.sumOfMarker++;
         this.tellSumOfMarker.emit(this.sumOfMarker);
         this.checkLastField();
-
-        this.sharedServiceTest = this.sh.name;
 
         this.checkBoxMarkerCompList.forEach(component => {
             component.round = this.round;

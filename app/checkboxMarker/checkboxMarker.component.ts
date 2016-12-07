@@ -3,10 +3,10 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
 // 'height': isClickPossibleRound1? '35px':'30px'
 @Component ({
     selector: 'checkbox-marker',
-    template: `<span class="checkbox-marker"
+    template: `<span class="checkbox-marker noselect"
                     [ngClass]="{'isMarked': isMarked, 'disabled': isDisabled}"
                     [ngStyle]="{'border-color': colorOfBox,
-                            'cursor': isDisabled || (!isClickPossibleRound1 && !isClickPossible)? 'auto':'pointer',
+                            'cursor': isDisabled || (!isClickPossibleRound1 && !isClickPossible)? 'default':'pointer',
                             'border-bottom-width': isClickPossible? '5px':'2px',
                             'border-bottom-style': isClickPossible? 'dotted':'solid',
                             'border-top-width': isClickPossibleRound1? '5px':'2px',
@@ -27,7 +27,7 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
         vertical-align: middle;
         color: grey;
         font-weight: 600;
-        cursor: pointer;
+        cursor: default;
     }
     
     .isMarked {
@@ -41,10 +41,12 @@ import {Component, Input, Output, EventEmitter} from "@angular/core";
 export class CheckboxMarkerComponent {
     @Input() colorNrOfBox:number;
     @Input() colorOfBox:string;
+    // index of box is used to emit to parent component
     @Input() indexOfBox:number;
     @Input() boxNr:number;
-    @Input() round:number; // 0: white dices another player,  1: white dices active, 2: colored dices active
+    @Input() round:number; // 1: white dices active, 2: colored dices active
     @Input() isLastInRow:boolean;
+    @Input() isActivePlayer:boolean;
 
     isDisabled:boolean;
     isClickPossibleRound1:boolean = false;
@@ -58,6 +60,9 @@ export class CheckboxMarkerComponent {
             return;
         }
         if (!this.isClickPossible && !this.isClickPossibleRound1) {
+            return;
+        }
+        if (!this.isActivePlayer && !this.isClickPossibleRound1) {
             return;
         }
         this.isMarked = true;

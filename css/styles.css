@@ -9,3 +9,38 @@ html {
 .wrapper {
     margin: 20px 0 0 1em;
 }
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.player-list,
+.round-list {
+    padding-left: 0px;
+}
+
+.player-list li ,
+.round-list li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 2px;
+}
+
+.player-list li.active {
+    background-color: lightcoral;
+}
+
+.round-list li.active {
+    background-color: lightgoldenrodyellow;
+}
+
+li.playerOfApp {
+    border-bottom: 2px solid black;
+}
