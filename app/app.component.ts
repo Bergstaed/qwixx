@@ -1,7 +1,11 @@
-import {Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild} from "@angular/core";
+import {
+    Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ViewChildren, QueryList,
+    OnChanges, SimpleChanges
+} from "@angular/core";
 import {SharedService} from "./shared.service";
 import {PossibleClicks} from "./possibleClicks";
 import {DieRowComponent} from "./dieRow/dieRow.component";
+import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow/checkboxMarkerRow.component";
 
 
 @Component({
@@ -15,10 +19,10 @@ import {DieRowComponent} from "./dieRow/dieRow.component";
     <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,1)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(1)" [numbersOfBoxes]="getNumbers(1)" [round]="roundNr" [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
     <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,2)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(2)" [numbersOfBoxes]="getNumbers(2)" [round]="roundNr" [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
     <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,3)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(3)" [numbersOfBoxes]="getNumbers(3)" [round]="roundNr" [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
-    <failCounter></failCounter>
+    <failCounter [isActivePlayer]="isActivePlayer" (failCounterPressed)="increaseFailCnt($event)"></failCounter>
     <br><br>
     <dieRow (transfer)="transferPossibleDieValues($event)"></dieRow>
-    <br>
+    <br>Summe: {{points}}
       <button (click)="nextPlayer()">Fertig</button>
       <br>
     <button disabled>Neues Spiel</button><br><br>
@@ -39,10 +43,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     sumMarker:Array<number> = [0, 0, 0, 0];
     roundNr:number = 0;
     shstst:string = "x";
+    points:number = 0;
+    numberOfFailCounts:number = 0;
     rowColors;
     rowNumbers;
 
-   // @ViewChildren(CheckboxMarkerComponent) checkBoxMarkerCompList : QueryList<CheckboxMarkerComponent>;
+    @ViewChildren(CheckboxmarkerRowComponent) checkBoxMarkerRowCompList : QueryList<CheckboxmarkerRowComponent>;
     @ViewChild(DieRowComponent) dieRow : DieRowComponent;
 
 
@@ -64,11 +70,37 @@ export class AppComponent implements OnInit, AfterViewInit {
     checkSum (sum:number,id:number):void {
         this.sumMarker[id]= sum;
 
+        this.setPoints();
         this.shstst = this.sh.name;
+    }
+    setPoints (): void {
+        this.points = this.getSumofPoints() - this.numberOfFailCounts * 5;
+    }
+
+    increaseFailCnt(cnt:number):void {
+        this.numberOfFailCounts = cnt;
+        this.setPoints();
+        this.nextPlayer();
     }
 
     getNumbers(rowNr:number):Array<number> {
         return this.rowNumbers[rowNr];
+    }
+    getSumofPoints(): number {
+        let sum:number = 0;
+        this.checkBoxMarkerRowCompList.forEach(component => {
+            let markedBoxes = component.sumOfMarker;
+            sum += this.getPoints(markedBoxes);
+        });
+        return sum;
+    }
+
+    getPoints(num:number): number {
+        let res:number = 0;
+        for (let i=1; i<=num; i++) {
+            res += i;
+        }
+        return res;
     }
     getColors(rowNr:number):Array<number> {
         return this.rowColors[rowNr];
