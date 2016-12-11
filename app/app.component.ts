@@ -1,11 +1,13 @@
 import {
-    Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ViewChildren, QueryList,
-    OnChanges, SimpleChanges
+    Component, OnInit, ChangeDetectorRef,
+    AfterViewInit, ViewChild, ViewChildren,
+    QueryList
 } from "@angular/core";
 import {SharedService} from "./shared.service";
 import {PossibleClicks} from "./possibleClicks";
 import {DieRowComponent} from "./dieRow/dieRow.component";
 import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow/checkboxMarkerRow.component";
+import {FailCounterComponent} from "./failCounter/failCounter.component";
 
 
 @Component({
@@ -14,52 +16,64 @@ import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow/checkboxMarkerRow.
     <h1>{{title | upper}}</h1>
     <player [activePlayerNr]="activePlayerNr"
             [appPlayerNr]="appPlayerNr"></player>
-    <round [activeRoundNr]="activeRoundNr"></round>
-    <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,0)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(0)" [numbersOfBoxes]="getNumbers(0)" [round]="roundNr" [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
-    <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,1)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(1)" [numbersOfBoxes]="getNumbers(1)" [round]="roundNr" [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
-    <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,2)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(2)" [numbersOfBoxes]="getNumbers(2)" [round]="roundNr" [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
-    <checkboxMarkerRow (tellSumOfMarker)="checkSum($event,3)" [allowedBoxesToClick]="allowedBx" [colorOfBoxes]="getColors(3)" [numbersOfBoxes]="getNumbers(3)" [round]="roundNr" [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
+    <!--<round [activeRoundNr]="activeRoundNr"></round>-->
+    
+    <checkboxMarkerRow *ngFor="let row of rowAr; let i = index"
+    (tellSumOfMarker)="tellSumOfCheckboxes($event,i)"
+    [artOfGame]="gameTypes[gameTypeNr]"
+    [allowedBoxesToClick]="allowedBx"
+    [allowedBoxesToClickDummyChangeValue]="allowedBoxesToClickDummyChangeValue"
+    [colorOfBoxes]="getColors(i)"
+    [numbersOfBoxes]="getNumbers(i)"
+    [round]="roundNr"
+    [hasGameFinished]="hasGameFinished"
+    [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
+
     <failCounter [isActivePlayer]="isActivePlayer" (failCounterPressed)="increaseFailCnt($event)"></failCounter>
-    <br><br>
+    <span class="margLeft">Summe: {{points}}</span>
+    <br><div *ngIf="hasGameFinished"> Ende des Spiels</div>
+    <br>
     <dieRow (transfer)="transferPossibleDieValues($event)"></dieRow>
-    <br>Summe: {{points}}
-      <button (click)="nextPlayer()">Fertig</button>
+      <button class="margLeft button--big" [disabled]="isReadyButtonDisabled" (click)="nextPlayer()">Fertig</button>
       <br>
-    <button disabled>Neues Spiel</button><br><br>
+    <br>
+    <button (click)="init(0)">Neues Spiel classic</button>
+    <button (click)="init(1)">Neues Spiel mixCol</button>
+    <button (click)="init(2)">Neues Spiel mixNum</button><br><br>
     <a href="http://www.brettspiele-magazin.de/qwixx-gemixxt/" target="_blank">Varianten Qwixx</a>
     </div>
 `
 })
 export class AppComponent implements OnInit, AfterViewInit {
     allowedBx:PossibleClicks = {all:[], col0:[], col1:[], col2:[], col3:[]};
-
+    allowedBoxesToClickDummyChangeValue:number = 0;
+    rowAr: Array<any> = [0,1,2,3];
     // dieRow sendet erlaubte Felder über EventEmitter hier in die app.component
     // Diese Daten von hier an CheckboxmarkerRow an Input senden
     activePlayerNr:number = 0;
     appPlayerNr:number = 0;
-    activeRoundNr:number = 0;
+    gameTypes:Array<string> = ["classic","colorchange","numberchange"];
+    gameTypeNr:number = 0;
     isActivePlayer:boolean;
+    isReadyButtonDisabled:boolean;
+    hasGameFinished:boolean;
     title:string = 'qwixx';
     sumMarker:Array<number> = [0, 0, 0, 0];
-    roundNr:number = 0;
-    shstst:string = "x";
+    roundNr:number;
     points:number = 0;
     numberOfFailCounts:number = 0;
+    possibleClickValue:number = 0;
     rowColors;
     rowNumbers;
 
     @ViewChildren(CheckboxmarkerRowComponent) checkBoxMarkerRowCompList : QueryList<CheckboxmarkerRowComponent>;
     @ViewChild(DieRowComponent) dieRow : DieRowComponent;
-
+    @ViewChild(FailCounterComponent) failCounter : FailCounterComponent;
 
     constructor(private sh:SharedService, private cdRef:ChangeDetectorRef){}
 
     ngOnInit(): void {
-        this.sh.name = "InitName";
-        this.rowColors = this.sh.rowColors;
-        this.rowNumbers = this.sh.rowNumbers;
-
-        this.isActivePlayer = (this.activePlayerNr == this.appPlayerNr);
+        this.init(this.gameTypeNr);
     }
 
     ngAfterViewInit(): void {
@@ -67,12 +81,50 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.cdRef.detectChanges();
     }
 
-    checkSum (sum:number,id:number):void {
+    init(gamenr:number=0){
+        this.gameTypeNr = gamenr;
+        this.hasGameFinished = false;
+
+        this.rowColors = this.sh.rowColors[this.gameTypes[gamenr]];
+        this.rowNumbers = this.sh.rowNumbers[this.gameTypes[gamenr]];
+        this.roundNr = 0;
+
+        this.isActivePlayer = (this.activePlayerNr == this.appPlayerNr);
+        this.isReadyButtonDisabled = this.isActivePlayer;
+
+        this.failCounter.ngOnInit();
+
+        if (this.checkBoxMarkerRowCompList) {
+            this.checkBoxMarkerRowCompList.forEach(component => {
+                component.resetRow();
+                component.sumOfMarker = 0;
+            });
+        }
+
+        this.points = 0;
+
+    }
+
+    // called, when marking a checkboxMarker
+    tellSumOfCheckboxes (sum:number, id:number):void {
         this.sumMarker[id]= sum;
 
         this.setPoints();
-        this.shstst = this.sh.name;
+
+        this.roundNr++;
+        // 1 : white; 2: color; 3: color and white;
+        this.possibleClickValue = this.sh.possibleClickValue;
+
+        let readyVal:boolean = false;
+        if (!this.isActivePlayer || this.possibleClickValue == 2 || this.roundNr >= 2) {
+            this.nextPlayer();
+
+            return;
+        }
+
+        this.isReadyButtonDisabled = readyVal;
     }
+
     setPoints (): void {
         this.points = this.getSumofPoints() - this.numberOfFailCounts * 5;
     }
@@ -80,12 +132,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     increaseFailCnt(cnt:number):void {
         this.numberOfFailCounts = cnt;
         this.setPoints();
+
+        if (cnt >= 4) {
+            this.showEndOfGame();
+            return;
+        }
         this.nextPlayer();
+    }
+
+    showEndOfGame() {
+        this.hasGameFinished = true;
     }
 
     getNumbers(rowNr:number):Array<number> {
         return this.rowNumbers[rowNr];
     }
+
     getSumofPoints(): number {
         let sum:number = 0;
         this.checkBoxMarkerRowCompList.forEach(component => {
@@ -102,23 +164,21 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
         return res;
     }
+
     getColors(rowNr:number):Array<number> {
         return this.rowColors[rowNr];
     }
 
-    getColorSpec():Array<number> {
-        return this.sh.rowcolor;
-    }
-
     transferPossibleDieValues (ev):void {
         this.allowedBx = ev;
-        this.roundNr++;
+        this.allowedBoxesToClickDummyChangeValue++;
     }
 
     nextPlayer() {
         this.activePlayerNr = this.sh.nextActivePlayer();
         this.isActivePlayer = (this.activePlayerNr == this.appPlayerNr);
+        this.isReadyButtonDisabled = this.isActivePlayer;
+        this.roundNr = 0;
         this.dieRow.rollAllDices();
     }
 }
-

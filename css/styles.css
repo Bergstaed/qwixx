@@ -34,7 +34,7 @@ html {
 }
 
 .player-list li.active {
-    background-color: lightcoral;
+    background-color: lightsalmon;
 }
 
 .round-list li.active {
@@ -43,4 +43,13 @@ html {
 
 li.playerOfApp {
     border-bottom: 2px solid black;
+}
+
+.margLeft {
+    margin-left: 15px;
+}
+
+.button--big {
+    padding: 5px 10px;
+    background-color: lightsalmon;
 }

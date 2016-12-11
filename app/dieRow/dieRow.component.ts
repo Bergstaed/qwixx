@@ -16,7 +16,7 @@ import {PossibleClicks} from "../possibleClicks";
     <my-die [backColOfDie]="getBackCol(1)" [colorOfDie]="getColor(1)" ></my-die>
     <my-die [backColOfDie]="getBackCol(2)" [colorOfDie]="getColor(2)" ></my-die>
     <my-die [backColOfDie]="getBackCol(3)" [colorOfDie]="getColor(3)" ></my-die>
-    <button (click)="rollAllDices()">Würfeln</button> <br>
+    <!--<button (click)="rollAllDices()">Würfeln</button> <br>-->
 `,
     styles: [`
 .dist {padding: 0 3px}`]

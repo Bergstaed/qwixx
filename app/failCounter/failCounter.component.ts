@@ -7,13 +7,14 @@ import {Component, Output, EventEmitter, Input, OnInit, OnChanges, SimpleChanges
 })
 export class FailCounterComponent implements OnInit, OnChanges {
     isActive:boolean = true;
-    failCounts:number = 0;
+    failCounts:number;
     @Input() isActivePlayer:boolean;
     @Output() failCounterPressed:EventEmitter<number> = new EventEmitter();
 
     constructor(){}
 
     ngOnInit(): void {
+        this.failCounts = 0;
         this.isActive = this.isActivePlayer;
     }
 

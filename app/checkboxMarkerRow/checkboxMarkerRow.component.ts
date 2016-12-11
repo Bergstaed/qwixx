@@ -18,9 +18,12 @@ import {PossibleClicks} from "../possibleClicks";
     [indexOfBox]="i"
     [isActivePlayer]="isActivePlayer"
     [boxNr]="numbersOfBoxes[i]"
+    [round]="round"
+    [hasGameFinished]="hasGameFinished"
+    [hasRoundedCorner]="true"
     [isLastInRow]="i==rowNumbers.length-1"
     (clickCheckMarker)="clickOnBox($event)" ></checkbox-marker>
-    <span class="points noselect">{{sumOfMarker | qwixxPoints}}</span>
+    <span class="points noselect">{{sumOfMarker | qwixxPoints}} <span class="light">({{sumOfMarker}})</span></span>
 </div>
 `,
     styles:[`
@@ -28,14 +31,20 @@ import {PossibleClicks} from "../possibleClicks";
     display: inline-block;
     padding: 6px 10px 0 5px;
 }
+.light {
+ color: gainsboro;
+}
 `]
 })
 export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChanges {
 
+    @Input() artOfGame:string;
     @Input() colorOfBoxes:Array<number>;
     @Input() numbersOfBoxes:Array<number>;
+    @Input() hasGameFinished:boolean;
 
     @Input() allowedBoxesToClick:PossibleClicks;
+    @Input() allowedBoxesToClickDummyChangeValue:number;
     @Input() isActivePlayer:boolean;
     @Input() round: number;
 
@@ -45,16 +54,25 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
 
     rowNumbers: Array<number> = [];
     sumOfMarker:number = 0;
+    //dummyChange:number = 0;
 
     constructor(private sh:SharedService) {
     }
 
     ngOnInit(): void {
-        this.rowNumbers = this.sh.rowNumbers[0];
+        this.rowNumbers = this.sh.rowNumbers[this.artOfGame][0];
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.setAllowedNumbersToClick(this.allowedBoxesToClick);
+        //this.dummyChange++; // [dummyChange]="dummyChange"
+    }
+
+    resetRow() {
+        this.checkBoxMarkerCompList.forEach(component => {
+            component.isDisabled = false;
+            component.isMarked = false;
+        });
     }
 
     ngAfterViewInit(): void {
@@ -65,12 +83,11 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     clickOnBox(id:number): void {
         this.disableBoxesOnTheLeft(id);
         this.sumOfMarker++;
+        if (id == this.rowNumbers.length - 1) {
+            this.sumOfMarker++;
+        }
         this.tellSumOfMarker.emit(this.sumOfMarker);
         this.checkLastField();
-
-        this.checkBoxMarkerCompList.forEach(component => {
-            component.round = this.round;
-        });
     }
 
     checkLastField() : void {
@@ -123,7 +140,4 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
         });
     }
 
-    getAValue(i): boolean{
-        return false;
-    }
 }

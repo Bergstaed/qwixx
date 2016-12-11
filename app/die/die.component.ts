@@ -15,6 +15,8 @@ import {RandomNumberService} from "./random-number.service";
 	    height: 30px;
 	    text-align: center;
 	    vertical-align: middle;
+	    padding-top: 6px;
+	    border-radius: 5px;
 	 }
 	 .die.visible-false {
 	    visibility: hidden;
