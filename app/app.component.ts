@@ -31,7 +31,7 @@ import {FailCounterComponent} from "./failCounter/failCounter.component";
 
     <failCounter [isActivePlayer]="isActivePlayer" (failCounterPressed)="increaseFailCnt($event)"></failCounter>
     <span class="margLeft">Summe: {{points}}</span>
-    <br><div *ngIf="hasGameFinished"> Ende des Spiels</div>
+    <br><div *ngIf="hasGameFinished" class="endOfgame"> Ende des Spiels</div>
     <br>
     <dieRow (transfer)="transferPossibleDieValues($event)"></dieRow>
       <button class="margLeft button--big" [disabled]="isReadyButtonDisabled" (click)="nextPlayer()">Fertig</button>
@@ -41,6 +41,9 @@ import {FailCounterComponent} from "./failCounter/failCounter.component";
     <button (click)="init(1)">Neues Spiel mixCol</button>
     <button (click)="init(2)">Neues Spiel mixNum</button><br><br>
     <a href="http://www.brettspiele-magazin.de/qwixx-gemixxt/" target="_blank">Varianten Qwixx</a>
+    <!--<input type="text" #myTitle value="qwixx">
+    <input [(ngModel)]="title">
+    <input [(ngModel)]="title" type="text">-->
     </div>
 `
 })

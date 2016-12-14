@@ -53,3 +53,12 @@ li.playerOfApp {
     padding: 5px 10px;
     background-color: lightsalmon;
 }
+.endOfgame {
+    position: absolute;
+    background: white;
+    padding: 5px 10px;
+    margin-top: -122px;
+    font-size: 30px;
+    opacity: 0.8;
+    margin-left: 91px;
+}

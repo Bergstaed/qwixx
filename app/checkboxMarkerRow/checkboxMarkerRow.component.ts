@@ -11,6 +11,7 @@ import {PossibleClicks} from "../possibleClicks";
     selector: 'checkboxMarkerRow',
     template: `
 <div style="clear: both; display: table">
+<div style="float: left;padding-top: 6px" [ngStyle]="{'color': getColor(colorOfBoxes[0])}">&#9654;</div>
 <checkbox-marker
     *ngFor="let box of rowNumbers; let i = index" 
     [colorOfBox]="getColor(colorOfBoxes[i])"
@@ -43,7 +44,15 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     @Input() numbersOfBoxes:Array<number>;
     @Input() hasGameFinished:boolean;
 
-    @Input() allowedBoxesToClick:PossibleClicks;
+    // TODO: check, if this setter is a solution to eliminate allowedBoxesToClickDummyChangeValue
+    private _allowedBoxesToClick;
+    @Input()
+    set allowedBoxesToClick(allowedBoxesToClick: PossibleClicks) {
+        this._allowedBoxesToClick = allowedBoxesToClick;
+       // this.setAllowedNumbersToClick(this.allowedBoxesToClick);
+    }
+    get allowedBoxesToClick(): PossibleClicks { return this._allowedBoxesToClick; }
+
     @Input() allowedBoxesToClickDummyChangeValue:number;
     @Input() isActivePlayer:boolean;
     @Input() round: number;
