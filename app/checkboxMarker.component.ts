@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, AfterViewInit, DoCheck} from "@angular/core";
-import {SharedService} from "../shared.service";
+import {SharedService} from "./shared.service";
 // 'margin-top': isClickPossibleRound1? '0':'3px',
 // 'height': isClickPossibleRound1? '35px':'30px'
 // check variable behind {{boxNr}}:   <br>{{round}}

@@ -2,10 +2,10 @@ import {
     Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter, ViewChildren,
     QueryList, AfterViewInit
 } from "@angular/core";
-import {SharedService} from "../shared.service";
-import {COLORS_QWIXX} from "../mock-colors-qwixx";
-import {CheckboxMarkerComponent} from "../checkboxMarker/checkboxMarker.component";
-import {PossibleClicks} from "../possibleClicks";
+import {SharedService} from "./shared.service";
+import {COLORS_QWIXX} from "./mock-colors-qwixx";
+import {CheckboxMarkerComponent} from "./checkboxMarker.component";
+import {PossibleClicks} from "./possibleClicks";
 
 @Component ({
     selector: 'checkboxMarkerRow',

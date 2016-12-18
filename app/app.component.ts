@@ -5,9 +5,9 @@ import {
 } from "@angular/core";
 import {SharedService} from "./shared.service";
 import {PossibleClicks} from "./possibleClicks";
-import {DieRowComponent} from "./dieRow/dieRow.component";
-import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow/checkboxMarkerRow.component";
-import {FailCounterComponent} from "./failCounter/failCounter.component";
+import {DieRowComponent} from "./dieRow.component";
+import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow.component";
+import {FailCounterComponent} from "./failCounter.component";
 
 
 @Component({

@@ -3,30 +3,33 @@ import {NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import { AppComponent } from './app.component';
 import { FormsModule }   from '@angular/forms';
-import {CheckboxMarkerComponent} from "./checkboxMarker/checkboxMarker.component";
-import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow/checkboxMarkerRow.component";
-import {ReversePipe} from "./utils/reverse.pipe";
+
+import {CheckboxMarkerComponent} from "./checkboxMarker.component";
+import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow.component";
 import {DieComponent} from "./die/die.component";
-import {UppercaseTestPipe} from "./utils/uppercaseTest.pipe";
-import {DieRowComponent} from "./dieRow/dieRow.component";
+import {DieRowComponent} from "./dieRow.component";
 import {SharedService} from "./shared.service";
-import {QwixxPointsPipe} from "./utils/qwixxPoints.pipe";
-import {FailCounterComponent} from "./failCounter/failCounter.component";
-import {PlayerComponent} from "./player/player.component";
-import {RoundComponent} from "./round/round.component";
+import {FailCounterComponent} from "./failCounter.component";
+import {PlayerComponent} from "./player.component";
+import {RoundComponent} from "./round.component";
+import {UtilsModule} from "./utils/utils.module";
 
 
 @NgModule ( {
-    imports: [BrowserModule,
-        FormsModule],
-    declarations: [AppComponent,
-        CheckboxmarkerRowComponent, CheckboxMarkerComponent,
-        DieComponent, DieRowComponent, PlayerComponent, RoundComponent,
-        FailCounterComponent,
-        ReversePipe, UppercaseTestPipe, QwixxPointsPipe],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        UtilsModule
+    ],
+    declarations: [
+        AppComponent,
+        CheckboxmarkerRowComponent,
+        CheckboxMarkerComponent,
+        DieComponent, DieRowComponent,
+        PlayerComponent,
+        RoundComponent,
+        FailCounterComponent],
     providers: [SharedService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
-// ParentComponent, ChildComponent, ChildSiblingComponent
-//     providers: [SharedService],

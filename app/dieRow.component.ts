@@ -2,10 +2,10 @@ import {
     Component, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef, Output,
     EventEmitter
 } from "@angular/core";
-import {COLORS_QWIXX} from "../mock-colors-qwixx";
-import {DieComponent} from "../die/die.component";
-import {SharedService} from "../shared.service";
-import {PossibleClicks} from "../possibleClicks";
+import {COLORS_QWIXX} from "./mock-colors-qwixx";
+import {DieComponent} from "./die/die.component";
+import {SharedService} from "./shared.service";
+import {PossibleClicks} from "./possibleClicks";
 
 @Component({
     selector:'dieRow',

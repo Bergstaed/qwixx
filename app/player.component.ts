@@ -1,6 +1,6 @@
 import {Component, AfterViewInit, Input} from "@angular/core";
-import {Player} from "../player";
-import {SharedService} from "../shared.service";
+import {Player} from "./player";
+import {SharedService} from "./shared.service";
 
 @Component({
     selector: 'player',
