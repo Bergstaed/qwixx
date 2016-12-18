@@ -44,6 +44,10 @@ export class DieRowComponent implements AfterViewInit {
 
     rollAllDices () {
         let dieVal:Array<number> = [];
+        if (!this.dieComponentList) {
+            return
+        }
+
         this.dieComponentList.forEach(component => {
             component.roll();
             dieVal.push(component.value);

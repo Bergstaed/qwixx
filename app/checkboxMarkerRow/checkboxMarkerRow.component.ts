@@ -16,6 +16,7 @@ import {PossibleClicks} from "../possibleClicks";
     *ngFor="let box of rowNumbers; let i = index" 
     [colorOfBox]="getColor(colorOfBoxes[i])"
     [colorNrOfBox]="colorOfBoxes[i]"
+    [borderColorOfBox]="getBorderColor(colorOfBoxes[i])"
     [indexOfBox]="i"
     [isActivePlayer]="isActivePlayer"
     [boxNr]="numbersOfBoxes[i]"
@@ -58,6 +59,7 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     @Input() round: number;
 
     @Output() tellSumOfMarker:EventEmitter<number> = new EventEmitter();
+    @Output() tellIsLast:EventEmitter<boolean> = new EventEmitter();
 
     @ViewChildren(CheckboxMarkerComponent) checkBoxMarkerCompList : QueryList<CheckboxMarkerComponent>;
 
@@ -78,10 +80,13 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     }
 
     resetRow() {
+        this.sumOfMarker = 0;
         this.checkBoxMarkerCompList.forEach(component => {
             component.isDisabled = false;
             component.isMarked = false;
         });
+
+        this.ngAfterViewInit();
     }
 
     ngAfterViewInit(): void {
@@ -90,12 +95,16 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     }
 
     clickOnBox(id:number): void {
+        let isLast:boolean = false;
+
         this.disableBoxesOnTheLeft(id);
         this.sumOfMarker++;
         if (id == this.rowNumbers.length - 1) {
+            isLast = true;
             this.sumOfMarker++;
         }
         this.tellSumOfMarker.emit(this.sumOfMarker);
+        this.tellIsLast.emit(isLast);
         this.checkLastField();
     }
 
@@ -122,6 +131,10 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     }
 
     getColor(colorNr:number) : string {
+        return COLORS_QWIXX.diceFieldColor[colorNr];
+    }
+
+    getBorderColor(colorNr:number) : string {
         return COLORS_QWIXX.diceBackground[colorNr];
     }
 

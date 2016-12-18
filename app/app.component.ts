@@ -20,6 +20,7 @@ import {FailCounterComponent} from "./failCounter/failCounter.component";
     
     <checkboxMarkerRow *ngFor="let row of rowAr; let i = index"
     (tellSumOfMarker)="tellSumOfCheckboxes($event,i)"
+    (tellIsLast)="tellIsLast($event)"
     [artOfGame]="gameTypes[gameTypeNr]"
     [allowedBoxesToClick]="allowedBx"
     [allowedBoxesToClickDummyChangeValue]="allowedBoxesToClickDummyChangeValue"
@@ -29,7 +30,8 @@ import {FailCounterComponent} from "./failCounter/failCounter.component";
     [hasGameFinished]="hasGameFinished"
     [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
 
-    <failCounter [isActivePlayer]="isActivePlayer" (failCounterPressed)="increaseFailCnt($event)"></failCounter>
+    <failCounter [isActivePlayer]="isActivePlayer"
+    (failCounterPressed)="increaseFailCnt($event)"></failCounter>
     <span class="margLeft">Summe: {{points}}</span>
     <br><div *ngIf="hasGameFinished" class="endOfgame"> Ende des Spiels</div>
     <br>
@@ -41,9 +43,13 @@ import {FailCounterComponent} from "./failCounter/failCounter.component";
     <button (click)="init(1)">Neues Spiel mixCol</button>
     <button (click)="init(2)">Neues Spiel mixNum</button><br><br>
     <a href="http://www.brettspiele-magazin.de/qwixx-gemixxt/" target="_blank">Varianten Qwixx</a>
-    <!--<input type="text" #myTitle value="qwixx">
-    <input [(ngModel)]="title">
-    <input [(ngModel)]="title" type="text">-->
+    <div>TODOs</div><ul>
+    <li>Reset-Funktion in jede Komponente, die auch onInit und AfterInit aufruft</li>
+    <li>Router für Spiel-Versionen</li>
+    <li>Eingabe der Spielernamen (und Anzahl der Spieler)</li>
+    <li>Utils Module erstellen</li>
+    </ul>
+    <input [(ngModel)]="title" type="text">
     </div>
 `
 })
@@ -66,6 +72,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     points:number = 0;
     numberOfFailCounts:number = 0;
     possibleClickValue:number = 0;
+    rowsCompleted:number = 0;
     rowColors;
     rowNumbers;
 
@@ -87,6 +94,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     init(gamenr:number=0){
         this.gameTypeNr = gamenr;
         this.hasGameFinished = false;
+        this.rowsCompleted = 0;
+
+        if (this.dieRow) {
+            this.dieRow.rollAllDices();
+        }
+
+        this.failCounter.resetFailCounts();
+        this.numberOfFailCounts = 0;
 
         this.rowColors = this.sh.rowColors[this.gameTypes[gamenr]];
         this.rowNumbers = this.sh.rowNumbers[this.gameTypes[gamenr]];
@@ -118,14 +133,23 @@ export class AppComponent implements OnInit, AfterViewInit {
         // 1 : white; 2: color; 3: color and white;
         this.possibleClickValue = this.sh.possibleClickValue;
 
-        let readyVal:boolean = false;
         if (!this.isActivePlayer || this.possibleClickValue == 2 || this.roundNr >= 2) {
             this.nextPlayer();
 
             return;
         }
 
-        this.isReadyButtonDisabled = readyVal;
+        this.isReadyButtonDisabled = false;
+        this.failCounter.isActive = false;
+    }
+
+    tellIsLast (isLast:boolean):void {
+        if (isLast) {
+            this.rowsCompleted++;
+        }
+        if (this.rowsCompleted >=2) {
+            this.showEndOfGame();
+        }
     }
 
     setPoints (): void {
@@ -145,6 +169,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     showEndOfGame() {
         this.hasGameFinished = true;
+        this.isReadyButtonDisabled = true;
     }
 
     getNumbers(rowNr:number):Array<number> {

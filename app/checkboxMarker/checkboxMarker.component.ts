@@ -8,8 +8,11 @@ import {SharedService} from "../shared.service";
     template: `<span class="checkbox-marker noselect"
                     [ngClass]="{'isMarked': isMarked, 'disabled': isDisabled,
                     'roundedCorner': hasRoundedCorner,
-                    'hasShadow': hasShadow}"
-                    [ngStyle]="{'border-color': colorOfBox,
+                    'hasShadow': hasShadow,
+                    'isLoosed': isDisabled && !isMarked && !isLastInRow}"
+                    [ngStyle]="{
+                            'border-color': borderColorOfBox,
+                            'color': colorOfBox,
                             'cursor': checkBoxCanBeClicked()? 'pointer':'default',
                             'border-bottom-width': isClickPossible? '5px':'2px',
                             'border-bottom-style': isClickPossible? 'dotted':'solid',
@@ -34,9 +37,6 @@ import {SharedService} from "../shared.service";
         cursor: default;
     }
     
-    .isMarked {
-        background-color: darkslategray;
-    }
     .disabled {
         opacity: 0.4;
     }
@@ -49,12 +49,23 @@ import {SharedService} from "../shared.service";
         -moz-box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
         box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
     }
+    .isLoosed {
+        background: url('img/minus.svg') no-repeat center;
+        background-size: cover;
+        opacity: 0.6;
+    }
+    .isMarked {
+        background: url('img/marked.png') no-repeat center;
+        background-size: cover;
+        opacity: 0.6;
+    }
 `]
 })
 export class CheckboxMarkerComponent implements AfterViewInit, DoCheck {
 
     @Input() colorNrOfBox:number;
     @Input() colorOfBox:string;
+    @Input() borderColorOfBox:string;
     // index of box is used to emit to parent component
     @Input() indexOfBox:number;
     @Input() boxNr:number;

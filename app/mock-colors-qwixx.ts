@@ -5,7 +5,17 @@ export const COLORS_QWIXX: any = {
         "#fd0",
         "green",
         "blue",
-        "#eee",],
+        "#eee"],
     diceColor: [
-        'white','black','white','white','black']
+        'white',
+        'black',
+        'white',
+        'white',
+        'black'],
+    diceFieldColor: [
+        'red',
+        '#fd0',
+        'green',
+        'blue',
+        'black']
 };

@@ -14,12 +14,16 @@ export class FailCounterComponent implements OnInit, OnChanges {
     constructor(){}
 
     ngOnInit(): void {
-        this.failCounts = 0;
+        this.resetFailCounts();
         this.isActive = this.isActivePlayer;
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.isActive = this.isActivePlayer;
+    }
+
+    resetFailCounts():void {
+        this.failCounts = 0;
     }
 
     addFailCount() {

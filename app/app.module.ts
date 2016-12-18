@@ -2,6 +2,7 @@
 import {NgModule} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import { AppComponent } from './app.component';
+import { FormsModule }   from '@angular/forms';
 import {CheckboxMarkerComponent} from "./checkboxMarker/checkboxMarker.component";
 import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow/checkboxMarkerRow.component";
 import {ReversePipe} from "./utils/reverse.pipe";
@@ -16,7 +17,8 @@ import {RoundComponent} from "./round/round.component";
 
 
 @NgModule ( {
-    imports: [BrowserModule],
+    imports: [BrowserModule,
+        FormsModule],
     declarations: [AppComponent,
         CheckboxmarkerRowComponent, CheckboxMarkerComponent,
         DieComponent, DieRowComponent, PlayerComponent, RoundComponent,
