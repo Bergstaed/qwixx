@@ -14,6 +14,7 @@ import {FailCounterComponent} from "./failCounter.component";
     selector: 'app',
     template: `<div class="wrapper">
     <h1>{{title | upper}}</h1>
+    <gameVariation (choose_new_game)="init()"></gameVariation>
     <player [activePlayerNr]="activePlayerNr"
             [appPlayerNr]="appPlayerNr"></player>
     <!--<round [activeRoundNr]="activeRoundNr"></round>-->
@@ -39,15 +40,13 @@ import {FailCounterComponent} from "./failCounter.component";
       <button class="margLeft button--big" [disabled]="isReadyButtonDisabled" (click)="nextPlayer()">Fertig</button>
       <br>
     <br>
-    <button (click)="init(0)">Neues Spiel classic</button>
-    <button (click)="init(1)">Neues Spiel mixCol</button>
-    <button (click)="init(2)">Neues Spiel mixNum</button><br><br>
+    <button (click)="init()">Neues Spiel</button><br><br>
     <a href="http://www.brettspiele-magazin.de/qwixx-gemixxt/" target="_blank">Varianten Qwixx</a>
     <div>TODOs</div><ul>
     <li>Reset-Funktion in jede Komponente, die auch onInit und AfterInit aufruft</li>
     <li>Router für Spiel-Versionen</li>
     <li>Eingabe der Spielernamen (und Anzahl der Spieler)</li>
-    <li>Utils Module erstellen</li>
+    <li>Verzögerungen bei Services berücksichtigen</li>
     </ul>
     <input [(ngModel)]="title" type="text">
     </div>
@@ -83,7 +82,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     constructor(private sh:SharedService, private cdRef:ChangeDetectorRef){}
 
     ngOnInit(): void {
-        this.init(this.gameTypeNr);
+        this.gameTypeNr = this.sh.gameTypeNr;
+        this.init();
     }
 
     ngAfterViewInit(): void {
@@ -91,8 +91,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.cdRef.detectChanges();
     }
 
-    init(gamenr:number=0){
-        this.gameTypeNr = gamenr;
+    init() {
+        this.gameTypeNr = this.sh.gameTypeNr;
+
         this.hasGameFinished = false;
         this.rowsCompleted = 0;
 
@@ -103,8 +104,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.failCounter.resetFailCounts();
         this.numberOfFailCounts = 0;
 
-        this.rowColors = this.sh.rowColors[this.gameTypes[gamenr]];
-        this.rowNumbers = this.sh.rowNumbers[this.gameTypes[gamenr]];
+        this.rowColors = this.sh.rowColors[this.gameTypes[this.gameTypeNr]];
+        this.rowNumbers = this.sh.rowNumbers[this.gameTypes[this.gameTypeNr]];
         this.roundNr = 0;
 
         this.isActivePlayer = (this.activePlayerNr == this.appPlayerNr);

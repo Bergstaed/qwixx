@@ -13,6 +13,7 @@ import {FailCounterComponent} from "./failCounter.component";
 import {PlayerComponent} from "./player.component";
 import {RoundComponent} from "./round.component";
 import {UtilsModule} from "./utils/utils.module";
+import {GameVariationComponent} from "./game-variation.component";
 
 
 @NgModule ( {
@@ -28,7 +29,9 @@ import {UtilsModule} from "./utils/utils.module";
         DieComponent, DieRowComponent,
         PlayerComponent,
         RoundComponent,
-        FailCounterComponent],
+        FailCounterComponent,
+        GameVariationComponent
+    ],
     providers: [SharedService],
     bootstrap: [AppComponent]
 })

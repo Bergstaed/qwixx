@@ -62,3 +62,9 @@ li.playerOfApp {
     opacity: 0.8;
     margin-left: 91px;
 }
+.gameVariationForm label {
+    margin-right: 10px;
+}
+.gameVariationForm input {
+    margin-right: 6px;
+}

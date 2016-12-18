@@ -5,6 +5,7 @@ import {Player} from "./player";
 export class SharedService {
     dataArray: string[] = [];
     _name:string;
+    gameTypeNr:number = 0;
     // 0: rot
     // 1: gelb
     // 2: grün
