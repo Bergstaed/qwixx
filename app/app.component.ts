@@ -9,12 +9,11 @@ import {DieRowComponent} from "./dieRow.component";
 import {CheckboxmarkerRowComponent} from "./checkboxMarkerRow.component";
 import {FailCounterComponent} from "./failCounter.component";
 
-
 @Component({
     selector: 'app',
     template: `<div class="wrapper">
     <h1>{{title | upper}}</h1>
-    <gameVariation (choose_new_game)="init()"></gameVariation>
+    <gameVariation (choose_new_game)="initDelay()"></gameVariation>
     <player [activePlayerNr]="activePlayerNr"
             [appPlayerNr]="appPlayerNr"></player>
     <!--<round [activeRoundNr]="activeRoundNr"></round>-->
@@ -32,22 +31,17 @@ import {FailCounterComponent} from "./failCounter.component";
     [isActivePlayer]="isActivePlayer"></checkboxMarkerRow>
 
     <failCounter [isActivePlayer]="isActivePlayer"
-    (failCounterPressed)="increaseFailCnt($event)"></failCounter>
+                 (failCounterPressed)="increaseFailCnt($event)"></failCounter>
     <span class="margLeft">Summe: {{points}}</span>
     <br><div *ngIf="hasGameFinished" class="endOfgame"> Ende des Spiels</div>
     <br>
     <dieRow (transfer)="transferPossibleDieValues($event)"></dieRow>
-      <button class="margLeft button--big" [disabled]="isReadyButtonDisabled" (click)="nextPlayer()">Fertig</button>
+      <button class="margLeft button--big button--highlighted"
+      [disabled]="isReadyButtonDisabled" (click)="nextPlayer()">Fertig</button>
       <br>
     <br>
-    <button (click)="init()">Neues Spiel</button><br><br>
-    <a href="http://www.brettspiele-magazin.de/qwixx-gemixxt/" target="_blank">Varianten Qwixx</a>
-    <div>TODOs</div><ul>
-    <li>Reset-Funktion in jede Komponente, die auch onInit und AfterInit aufruft</li>
-    <li>Router für Spiel-Versionen</li>
-    <li>Eingabe der Spielernamen (und Anzahl der Spieler)</li>
-    <li>Verzögerungen bei Services berücksichtigen</li>
-    </ul>
+    <button (click)="init()" class="button--big">Neues Spiel</button><br><br>
+    <qwixxInfo></qwixxInfo>
     <input [(ngModel)]="title" type="text">
     </div>
 `
@@ -91,6 +85,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.cdRef.detectChanges();
     }
 
+    // Auch Verzögrung behebt den Fehler nicht
+    initDelay() {
+        setTimeout(() => this.init(), 10);
+
+    }
+
     init() {
         this.gameTypeNr = this.sh.gameTypeNr;
 
@@ -102,6 +102,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
 
         this.failCounter.resetFailCounts();
+        this.failCounter.ngOnInit();
+
         this.numberOfFailCounts = 0;
 
         this.rowColors = this.sh.rowColors[this.gameTypes[this.gameTypeNr]];
@@ -111,8 +113,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.isActivePlayer = (this.activePlayerNr == this.appPlayerNr);
         this.isReadyButtonDisabled = this.isActivePlayer;
 
-        this.failCounter.ngOnInit();
-
         if (this.checkBoxMarkerRowCompList) {
             this.checkBoxMarkerRowCompList.forEach(component => {
                 component.resetRow();
@@ -121,7 +121,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
 
         this.points = 0;
-
+        this.allowedBoxesToClickDummyChangeValue++;
     }
 
     // called, when marking a checkboxMarker
@@ -209,5 +209,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.isReadyButtonDisabled = this.isActivePlayer;
         this.roundNr = 0;
         this.dieRow.rollAllDices();
+        this.allowedBoxesToClickDummyChangeValue++;
     }
 }

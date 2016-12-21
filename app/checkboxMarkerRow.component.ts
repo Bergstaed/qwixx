@@ -59,13 +59,12 @@ export class CheckboxmarkerRowComponent implements OnInit, AfterViewInit, OnChan
     @Input() round: number;
 
     @Output() tellSumOfMarker:EventEmitter<number> = new EventEmitter();
+
     @Output() tellIsLast:EventEmitter<boolean> = new EventEmitter();
 
     @ViewChildren(CheckboxMarkerComponent) checkBoxMarkerCompList : QueryList<CheckboxMarkerComponent>;
-
     rowNumbers: Array<number> = [];
     sumOfMarker:number = 0;
-    //dummyChange:number = 0;
 
     constructor(private sh:SharedService) {
     }

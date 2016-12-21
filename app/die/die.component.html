@@ -1,3 +1,3 @@
-<div class="die eyes-{{value}} visible-{{visible}}" (click)="roll()">
+<div class="die visible-{{visible}}" [ngStyle]="{'background': backgroundColorOfDie,'color':colorOfDie}">
 	{{value}}
 </div>

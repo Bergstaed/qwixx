@@ -5,7 +5,7 @@ import {SharedService} from "./shared.service";
 @Component({
     selector: 'gameVariation',
     template: `
-<form *ngIf="gameVariationNames.length > 0"name="gameVariationForm" class="gameVariationForm">
+<form *ngIf="gameVariationNames.length > 0" name="gameVariationForm" class="gameVariationForm fixed fixed--topright">
     <label *ngFor="let gameName of gameVariationNames; let i=index" >
         <input type="radio" name="gameVariation" value="{{gameName}}"
         (click)="selectGame(i)" [checked]="i==0">{{gameName}}

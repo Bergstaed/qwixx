@@ -2,12 +2,10 @@ import {Component, OnInit, Input} from '@angular/core';
 import {RandomNumberService} from "../utils/random-number.service";
 
 @Component({
-  selector: 'my-die',
-  providers: [RandomNumberService],
-	template: `
-	<div class="die visible-{{visible}}" [ngStyle]="{'background': backgroundColorOfDie,'color':colorOfDie}">
-		{{value}}
-	</div>`,
+	selector: 'my-die',
+	providers: [RandomNumberService],
+		moduleId: module.id,
+		templateUrl: 'die.component.html',
 	styles: [`
 	 .die {
 	    display: inline-block;
@@ -44,7 +42,13 @@ export class DieComponent implements OnInit {
 	}
 }
 /*
- templateUrl: './die.component.html',
+
+
+ template: `
+ <div class="die visible-{{visible}}" [ngStyle]="{'background': backgroundColorOfDie,'color':colorOfDie}">
+ {{value}}
+ </div>`,
+
 
  styleUrls: ['./die.component.css']
  */

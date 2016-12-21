@@ -14,6 +14,7 @@ import {PlayerComponent} from "./player.component";
 import {RoundComponent} from "./round.component";
 import {UtilsModule} from "./utils/utils.module";
 import {GameVariationComponent} from "./game-variation.component";
+import {QwixxInfoComponent} from "./qwixx-info.component";
 
 
 @NgModule ( {
@@ -30,7 +31,8 @@ import {GameVariationComponent} from "./game-variation.component";
         PlayerComponent,
         RoundComponent,
         FailCounterComponent,
-        GameVariationComponent
+        GameVariationComponent,
+        QwixxInfoComponent
     ],
     providers: [SharedService],
     bootstrap: [AppComponent]

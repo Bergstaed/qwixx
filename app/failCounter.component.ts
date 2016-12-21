@@ -3,7 +3,8 @@ import {Component, Output, EventEmitter, Input, OnInit, OnChanges, SimpleChanges
 @Component ({
     selector:'failCounter',
     template: `<button [disabled]="!isActive"
-    (click)="addFailCount()">Fehlwurf</button> <span> Anzahl Fehlwürfe: {{failCounts}}</span>`
+    (click)="addFailCount()" class="button--big">Fehlwurf</button>
+     <span> Anzahl Fehlwürfe: {{failCounts}}</span>`
 })
 export class FailCounterComponent implements OnInit, OnChanges {
     isActive:boolean = true;

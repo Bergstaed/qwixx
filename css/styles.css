@@ -51,6 +51,8 @@ li.playerOfApp {
 
 .button--big {
     padding: 5px 10px;
+}
+.button--highlighted {
     background-color: lightsalmon;
 }
 .endOfgame {
@@ -67,4 +69,21 @@ li.playerOfApp {
 }
 .gameVariationForm input {
     margin-right: 6px;
+}
+
+.fixed {
+    position: fixed;
+}
+.fixed--topright {
+    top: 10px;
+    right: 10px;
+}
+
+.button--round {
+    border-radius: 4px;
+}
+
+/* für Directive  */
+.myBorder {
+    outline: 1px solid #444;
 }

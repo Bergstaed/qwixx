@@ -10,6 +10,7 @@ import {PossibleClicks} from "./possibleClicks";
 @Component({
     selector:'dieRow',
     template: `
+<div  myBorder [myHighlight]="'#ccc'" style="display: inline-block">
     <my-die [backColOfDie]="getBackCol(4)" [colorOfDie]="getColor(4)" ></my-die>
     <my-die [backColOfDie]="getBackCol(4)" [colorOfDie]="getColor(4)" ></my-die> <span class="dist"></span>
     <my-die [backColOfDie]="getBackCol(0)" [colorOfDie]="getColor(0)" ></my-die>
@@ -17,6 +18,7 @@ import {PossibleClicks} from "./possibleClicks";
     <my-die [backColOfDie]="getBackCol(2)" [colorOfDie]="getColor(2)" ></my-die>
     <my-die [backColOfDie]="getBackCol(3)" [colorOfDie]="getColor(3)" ></my-die>
     <!--<button (click)="rollAllDices()">Würfeln</button> <br>-->
+</div>
 `,
     styles: [`
 .dist {padding: 0 3px}`]
@@ -38,6 +40,7 @@ export class DieRowComponent implements AfterViewInit {
     getBackCol(colorNr:number):string {
         return COLORS_QWIXX.diceBackground[colorNr];
     }
+
     getColor(colorNr:number):string {
         return COLORS_QWIXX.diceColor[colorNr];
     }

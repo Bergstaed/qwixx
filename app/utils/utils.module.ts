@@ -4,6 +4,8 @@ import {CommonModule} from "@angular/common";
 import {QwixxPointsPipe} from "./qwixxPoints.pipe";
 import {ReversePipe} from "./reverse.pipe";
 import {UppercaseTestPipe} from "./uppercaseTest.pipe";
+import {MyBorder} from "./my-border.directive";
+import {MyHighight} from "./my-highlight.directive";
 
 @NgModule ({
     imports:[
@@ -12,12 +14,16 @@ import {UppercaseTestPipe} from "./uppercaseTest.pipe";
     declarations:[
         QwixxPointsPipe,
         ReversePipe,
-        UppercaseTestPipe
+        UppercaseTestPipe,
+        MyHighight,
+        MyBorder
     ],
     exports:[
         QwixxPointsPipe,
         ReversePipe,
-        UppercaseTestPipe
+        UppercaseTestPipe,
+        MyHighight,
+        MyBorder
     ]
 })
 export class UtilsModule {
