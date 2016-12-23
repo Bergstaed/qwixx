@@ -5,6 +5,9 @@ html {
     box-sizing: inherit;
 }
 
+button:not(:disabled) {
+    cursor: pointer;
+}
 
 .wrapper {
     margin: 20px 0 0 1em;

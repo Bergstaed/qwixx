@@ -54,8 +54,8 @@ export class SharedService {
 
     playerThisRound: Array<Player> = [
         {name:'Michael'},
-        {name:'Maja'},
-        {name:'Spieler 2'}
+        {name:'Spieler 2'},
+        {name:'Spieler 3'}
     ];
     activePlayerNr: number = 0;
     round:number = 0;

@@ -15,6 +15,7 @@ import {Component,
         <h3>TODOs</h3>
         <ul>
             <li>Reset-Funktion in jede Komponente, die auch onInit und AfterInit aufruft</li>
+            <li>Punkte-Reihe zum ein-ausblenden</li>
             <li>Router für Spiel-Versionen</li>
             <li>Eingabe der Spielernamen (und Anzahl der Spieler)</li>
             <li>Verzögerungen bei Services berücksichtigen</li>

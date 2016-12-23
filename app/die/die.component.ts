@@ -7,6 +7,12 @@ import {RandomNumberService} from "../utils/random-number.service";
 		moduleId: module.id,
 		templateUrl: 'die.component.html',
 	styles: [`
+	:host {
+		display: inline-block;
+		border-right: 2px solid black;
+		border-bottom: 2px solid black;
+	    border-radius: 7px;
+	}
 	 .die {
 	    display: inline-block;
 	    width: 30px;

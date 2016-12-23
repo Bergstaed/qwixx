@@ -35,11 +35,12 @@ import {FailCounterComponent} from "./failCounter.component";
     <span class="margLeft">Summe: {{points}}</span>
     <br><div *ngIf="hasGameFinished" class="endOfgame"> Ende des Spiels</div>
     <br>
-    <dieRow (transfer)="transferPossibleDieValues($event)"></dieRow>
+    <dieRow (transfer)="transferPossibleDieValues($event)"
+    [isActivePlayer]="isActivePlayer" ></dieRow>
       <button class="margLeft button--big button--highlighted"
       [disabled]="isReadyButtonDisabled" (click)="nextPlayer()">Fertig</button>
       <br>
-    <br>
+      <pointsLookupTable></pointsLookupTable>
     <button (click)="init()" class="button--big">Neues Spiel</button><br><br>
     <qwixxInfo></qwixxInfo>
     <input [(ngModel)]="title" type="text">
@@ -88,7 +89,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     // Auch Verzögrung behebt den Fehler nicht
     initDelay() {
         setTimeout(() => this.init(), 10);
-
     }
 
     init() {
@@ -98,6 +98,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.rowsCompleted = 0;
 
         if (this.dieRow) {
+            this.dieRow.reset();
             this.dieRow.rollAllDices();
         }
 

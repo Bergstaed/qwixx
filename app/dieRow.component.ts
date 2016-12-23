@@ -1,6 +1,6 @@
 import {
     Component, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef, Output,
-    EventEmitter
+    EventEmitter, Input
 } from "@angular/core";
 import {COLORS_QWIXX} from "./mock-colors-qwixx";
 import {DieComponent} from "./die/die.component";
@@ -17,7 +17,8 @@ import {PossibleClicks} from "./possibleClicks";
     <my-die [backColOfDie]="getBackCol(1)" [colorOfDie]="getColor(1)" ></my-die>
     <my-die [backColOfDie]="getBackCol(2)" [colorOfDie]="getColor(2)" ></my-die>
     <my-die [backColOfDie]="getBackCol(3)" [colorOfDie]="getColor(3)" ></my-die>
-    <!--<button (click)="rollAllDices()">Würfeln</button> <br>-->
+    <button *ngIf="anzahl>0" class="margLeft button--big" (click)="decreaseCounterAndRollDices()"
+      [disabled]="anzahl<=0 || !isActivePlayer" >würfel({{anzahl}}x)</button>
 </div>
 `,
     styles: [`
@@ -25,6 +26,10 @@ import {PossibleClicks} from "./possibleClicks";
 })
 export class DieRowComponent implements AfterViewInit {
     possibleValues_ArNum: PossibleClicks = {all:[], col0:[], col1:[], col2:[], col3:[]};
+    startValueDieAgain:number = 5;
+    anzahl:number = this.startValueDieAgain;
+
+    @Input() isActivePlayer:boolean;
     @Output() transfer:EventEmitter<any> = new EventEmitter();
 
     constructor(private sh:SharedService, private cdRef:ChangeDetectorRef){}
@@ -37,12 +42,21 @@ export class DieRowComponent implements AfterViewInit {
 
     @ViewChildren(DieComponent) dieComponentList: QueryList<DieComponent>;
 
+    reset() {
+        this.anzahl = this.startValueDieAgain;
+    }
+
     getBackCol(colorNr:number):string {
         return COLORS_QWIXX.diceBackground[colorNr];
     }
 
     getColor(colorNr:number):string {
         return COLORS_QWIXX.diceColor[colorNr];
+    }
+
+    decreaseCounterAndRollDices() {
+        this.anzahl--;
+        this.rollAllDices();
     }
 
     rollAllDices () {
